@@ -4,6 +4,8 @@ import CarsService from '../Services/cars.service';
 
 const OK_STATUS = 200;
 const CREATED_STATUS = 201;
+const NOT_FOUND_STATUS = 404;
+const UNPROCESSABLE_ENTITY_STATUS = 422;
 
 export default class CarController {
   constructor(
@@ -33,14 +35,36 @@ export default class CarController {
 
   public async getById(req: Request, res: Response, next: NextFunction) {
     try {
-      if (!isValidObjectId(req.params.id)) {
-        return res.status(422).json({ message: 'Invalid mongo id' });
+      const { id } = req.params;
+
+      if (!isValidObjectId(id)) {
+        return res.status(UNPROCESSABLE_ENTITY_STATUS).json({ message: 'Invalid mongo id' });
       }
+
       const car = await this.carService.getCarById(req.params.id);
 
-      if (car === undefined) return res.status(404).json({ message: 'Car not found' });
+      if (car === undefined) return res.status(NOT_FOUND_STATUS).json({ message: 'Car not found' });
 
       return res.status(OK_STATUS).json(car);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  public async updateCarById(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { body } = req;
+      const { id } = req.params;
+
+      if (!isValidObjectId(id)) {
+        return res.status(UNPROCESSABLE_ENTITY_STATUS).json({ message: 'Invalid mongo id' });
+      }
+    
+      const updatedCar = await this.carService.updateCarById(id, body);
+      
+      if (!updatedCar) return res.status(NOT_FOUND_STATUS).json({ message: 'Car not found' });
+
+      return res.status(OK_STATUS).json(updatedCar);
     } catch (error) {
       next(error);
     }
