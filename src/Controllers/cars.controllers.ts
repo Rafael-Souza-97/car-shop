@@ -12,7 +12,7 @@ export default class CarController {
     private carService = new CarsService(),
   ) {}
   
-  public async create(req: Request, res: Response, next: NextFunction) {
+  public async createCar(req: Request, res: Response, next: NextFunction) {
     try {
       const { body } = req;
       const newCar = await this.carService.createCar(body);
@@ -33,7 +33,7 @@ export default class CarController {
     }
   }
 
-  public async getById(req: Request, res: Response, next: NextFunction) {
+  public async getCarById(req: Request, res: Response, next: NextFunction) {
     try {
       const { id } = req.params;
 
