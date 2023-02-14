@@ -18,4 +18,18 @@ export default class CarService {
 
     return this.createCarDomain(newCar);
   }
+
+  public async getAllCars() {
+    const allCars = await this.model.getAllCars();
+
+    return allCars.map((car) => this.createCarDomain(car));
+  }
+
+  public async getCarById(id: string) {
+    const cars = await this.model.getById(id);
+
+    if (cars === null) return undefined;
+  
+    return this.createCarDomain(cars as ICar);
+  }
 }
