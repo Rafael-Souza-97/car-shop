@@ -73,4 +73,13 @@ describe('Teste Cars', function () {
 
     expect(response).to.be.deep.equal(car);    
   });
+
+  it('Deveria falhar se receber um id errado', async function () {
+    sinon.stub(Model, 'findOne').resolves(null);
+
+    const service = new CarService();
+    const response = await service.getCarById('63ebe2e04d27c66c68536004');
+
+    expect(response).to.be.deep.equal(undefined);    
+  });
 });
