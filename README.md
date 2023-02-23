@@ -9,7 +9,7 @@ Para garantir a qualidade e confiabilidade da API construída, foram realizados 
 <br>
 
 <details>
-  <summary><strong>Como instalar o Projeto Car Shop</strong></summary><br />
+  <summary><strong>Como instalar o Projeto Car-Shop</strong></summary><br />
 
 ## Instalação
  
